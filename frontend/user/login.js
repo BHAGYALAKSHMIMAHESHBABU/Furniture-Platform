@@ -32,7 +32,7 @@ document.getElementById("login-form").addEventListener("submit", async function 
 
   // ✅ Redirect based on email
   if (data.user.email === "admin@furnovera.com") {
-    window.location.href = "/frontend/admin/fur.html"; // Admin dashboard page
+    window.location.href = "/admin/fur.html"; // Admin dashboard page
   } else {
     window.location.href = "index.html"; // Regular user
   }
