@@ -1,1 +1,1 @@
-/ /home.html 200
+/ /user/index.html 200
