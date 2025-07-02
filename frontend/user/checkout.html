@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Furnovera - Checkout</title>
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+
+    header.heads {
+      background-color: rgb(242, 220, 108);
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .lefthead, .righthead {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .logo h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    nav.nav-menu {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    nav.nav-menu a {
+      text-decoration: none;
+      color: #222;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #fff4cc;
+      position: fixed;
+      top: 0;
+      left: -300px;
+      transition: left 0.3s ease;
+      padding: 30px 20px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      z-index: 2000;
+    }
+
+    .sidebar.show {
+      left: 0;
+    }
+
+    main.checkout-container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .checkout-form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 500;
+    }
+
+    .checkout-form input,
+    .checkout-form textarea,
+    .checkout-form select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .order-summary {
+      margin-top: 30px;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+    }
+
+    .order-summary ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    footer {
+      background-color: #222;
+      color: #fff;
+      padding: 40px 20px 20px;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .welcome-banner {
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 10px;
+    }
+    .righthead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.righthead button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.righthead button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.righthead img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.righthead button:hover img {
+  transform: scale(1.1);
+}
+
+  </style>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="heads">
+  <div class="lefthead">
+    <button class="side" onclick="toggleSidebar()">
+      <img class="sideImg" src="https://img.icons8.com/?size=100&id=16247&format=png&color=000000" alt="menu" />
+    </button>
+    <div class="logo">
+      <img src="img/ChatGPT Image Jun 29, 2025, 10_23_13 PM.png" alt="logo" />
+      <h2>Furnovera</h2>
+    </div>
+  </div>
+ <nav class="nav-menu">
+  <a href="index.html">Home</a>
+  <a href="product.html">Shop</a>
+  <a href="#!" onclick="document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });">Categories</a>
+  <a href="wishlist.html">Wishlist</a>
+  <a href="cart.html">Cart</a>
+  <a href="contact.html">Contact</a>
+</nav>
+  <div class="righthead">
+    <button id="loginBtn" onclick="location.href='login.html'">
+      <img src="https://img.icons8.com/?size=100&id=fJ7hcfUGpKG7&format=png&color=1A1A1A" alt="login" />
+    </button>
+    <button onclick="location.href='wishlist.html'">
+      <img src="https://img.icons8.com/?size=100&id=87&format=png&color=000000" alt="wishlist" />
+    </button>
+    <button onclick="location.href='cart.html'">
+      <img src="https://img.icons8.com/?size=100&id=ii6Lr4KivOiE&format=png&color=000000" alt="cart" />
+    </button>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <ul>
+      <h2>Menu</h2>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="order.html">Orders</a></li>
+      <li><a href="signout.html">Signout</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- CHECKOUT FORM -->
+<main class="checkout-container">
+  <div id="welcome-message" class="welcome-banner"></div>
+  <h1>Checkout</h1>
+  <form class="checkout-form" onsubmit="submitOrder(event)">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" required />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" required />
+
+    <label for="address">Shipping Address</label>
+    <textarea id="address" rows="4" required></textarea>
+
+    <label for="payment-method">Payment Method</label>
+    <select id="payment-method" required onchange="togglePaymentInputs()">
+      <option value="">Select</option>
+      <option value="card">Credit/Debit Card</option>
+      <option value="upi">UPI</option>
+      <option value="cod">Cash on Delivery</option>
+    </select>
+
+    <div id="card-fields" style="display:none;">
+      <label for="card">Card Number</label>
+      <input type="text" id="card" maxlength="16" />
+      <label for="expiry">Expiry Date</label>
+      <input type="text" id="expiry" placeholder="MM/YY" />
+      <label for="cvv">CVV</label>
+      <input type="text" id="cvv" maxlength="3" />
+    </div>
+
+    <div id="upi-fields" style="display:none;">
+      <label for="upi">UPI ID</label>
+      <input type="text" id="upi" placeholder="example@upi" />
+    </div>
+
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <ul id="order-list"></ul>
+      <h4>Total: ₹<span id="checkout-total">0</span></h4>
+    </div>
+
+    <button type="submit" class="submit-btn">Place Order</button>
+  </form>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>Furnovera</h3>
+      <p>Your trusted partner for premium furniture and lifestyle.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Shop</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="order.html">Orders</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Email: support@furnovera.com</p>
+      <p>Phone: +91-987654310</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Furnovera. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('show');
+}
+
+function togglePaymentInputs() {
+  const method = document.getElementById("payment-method").value;
+  document.getElementById("card-fields").style.display = method === "card" ? "block" : "none";
+  document.getElementById("upi-fields").style.display = method === "upi" ? "block" : "none";
+}
+
+function loadOrderSummary() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const list = document.getElementById("order-list");
+  const totalSpan = document.getElementById("checkout-total");
+  let total = 0;
+  list.innerHTML = "";
+
+  if (cart.length === 0) {
+    list.innerHTML = "<li style='color:#888;'>🛒 No items in your cart.</li>";
+    totalSpan.textContent = "0";
+    return;
+  }
+
+  cart.forEach(item => {
+    const qty = item.qty || 1;
+    const price = item.discount || item.price;
+    const itemTotal = qty * price;
+    total += itemTotal;
+
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${item.name} × ${qty}</span><span>₹${itemTotal}</span>`;
+    li.style.display = "flex";
+    li.style.justifyContent = "space-between";
+    li.style.marginBottom = "8px";
+    list.appendChild(li);
+  });
+
+  totalSpan.textContent = total;
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  
+  if (user) {
+    document.getElementById("name").value = user.name || "";
+    document.getElementById("email").value = user.email || "";
+    document.getElementById("welcome-message").textContent = `Welcome, ${user.name}!`;
+    document.getElementById("loginBtn").style.display = "none";
+  }
+
+  loadOrderSummary();
+});
+
+async function submitOrder(event) {
+  event.preventDefault();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user && user._id ? user._id : null;
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const address = document.getElementById("address").value;
+  const method = document.getElementById("payment-method").value;
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (!method) {
+    alert("⚠️ Please select a payment method.");
+    return;
+  }
+
+  if (cart.length === 0) {
+    alert("🛒 Your cart is empty.");
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => {
+    const qty = item.qty || 1;
+    const price = item.discount || item.price;
+    return sum + qty * price;
+  }, 0);
+
+  const orderData = {
+    userId, // null for guest
+    name,
+    email,
+    address,
+    items: cart,
+    total,
+    paymentMethod: method,
+    deliveryDate: new Date().toLocaleDateString(),
+    deliveryTime: new Date().toLocaleTimeString(),
+  };
+
+  try {
+    const res = await fetch("https://furnovera-backend.onrender.com/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData),
+    });
+
+    if (!res.ok) throw new Error("Failed to place order");
+
+    alert("✅ Order placed successfully!");
+    localStorage.removeItem("cart");
+    location.href = "order.html";
+  } catch (err) {
+    console.error(err);
+    alert("❌ Failed to place order. Try again later.");
+  }
+}
+</script>
+
+<!-- <script src="index.js"></script> -->
+</body>
+</html>

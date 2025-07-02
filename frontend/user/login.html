@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Furnovera</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="image-wrapper">
+      <img src="img/dmitry-spravko-XUQvwLxikZU-unsplash.jpg" alt="img">
+    </div>
+
+    <section class="form-container login active">
+      <div>
+        <h1>WELCOME BACK!!</h1>
+        <h3>Login</h3>
+        <form id="login-form">
+          <input type="text" placeholder="Username/Email" name="email" required>
+          <input type="password" placeholder="Password" name="password" required>
+          <button type="submit">Login</button>
+          <button type="button" onclick="toggleForm()">Switch to Sign Up</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="form-container signup">
+      <div>
+        <h1>WELCOME!!</h1>
+        <h3>Sign Up</h3>
+        <form id="signup-form">
+          <input type="text" placeholder="Email" name="email" required>
+          <input type="text" placeholder="Username" name="username" required>
+          <input type="password" placeholder="Password" name="password" required>
+          <button type="submit">Sign up</button>
+          <button type="button" onclick="toggleForm()">Switch to Login</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signing Out...</title>
+  <script>
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1000);
+  </script>
+</head>
+<body>
+  <h2 style="text-align:center;">Signing you out...</h2>
+</body>
+</html>

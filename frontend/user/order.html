@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Orders - Furnovera</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9f9fb;
+      color: #333;
+    }
+
+    header.heads {
+      background-color: #ffe680;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .lefthead, .righthead {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .side {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .sideImg {
+      width: 26px;
+    }
+    .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .logo h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    nav.nav-menu {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav.nav-menu a {
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    nav.nav-menu a:hover {
+      color: #111;
+    }
+
+    .righthead button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .righthead img {
+      width: 26px;
+    }
+
+    .sidebar {
+      width: 240px;
+      height: 100vh;
+      background: #fffbed;
+      position: fixed;
+      top: 0;
+      left: -280px;
+      transition: 0.3s ease-in-out;
+      padding: 30px 20px;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+      z-index: 1500;
+    }
+
+    .sidebar.show {
+      left: 0;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 18px;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #333;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+
+    .sidebar ul li a:hover {
+      color: #000;
+    }
+
+    main.orders-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .orders-container h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #222;
+    }
+
+    .order-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+      transition: transform 0.2s ease;
+    }
+
+    
+
+    .order-card h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .order-card p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .order-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .order-card li {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      font-size: 15px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 13px;
+      border-radius: 12px;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .status-pending { background-color: #ffc107; color: #000; }
+    .status-shipped { background-color: #17a2b8; color: #fff; }
+    .status-delivered { background-color: #28a745; color: #fff; }
+    .status-cancelled { background-color: #dc3545; color: #fff; }
+
+    footer {
+      background: #222;
+      color: #fff;
+      padding: 40px 20px 25px;
+      margin-top: 50px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .footer-brand h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links h4 {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    .footer-contact p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      nav.nav-menu {
+        display: none;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="heads">
+  <div class="lefthead">
+    <button class="side" onclick="toggleSidebar()">
+      <img class="sideImg" src="https://img.icons8.com/?size=100&id=16247&format=png&color=000000" alt="menu"/>
+    </button>
+    <div class="logo">
+      <img src="img/ChatGPT Image Jun 29, 2025, 10_23_13 PM.png" alt="logo"/>
+      <h2>Furnovera</h2>
+    </div>
+  </div>
+   <nav class="nav-menu">
+  <a href="index.html">Home</a>
+  <a href="product.html">Shop</a>
+  <a href="#!" onclick="document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });">Categories</a>
+  <a href="wishlist.html">Wishlist</a>
+  <a href="cart.html">Cart</a>
+  <a href="contact.html">Contact</a>
+</nav>
+  <div class="righthead">
+    <button onclick="location.href='login.html'"><img src="https://img.icons8.com/?size=100&id=fJ7hcfUGpKG7&format=png" alt="login"/></button>
+    <button onclick="location.href='wishlist.html'"><img src="https://img.icons8.com/?size=100&id=87&format=png" alt="wishlist"/></button>
+    <button onclick="location.href='cart.html'"><img src="https://img.icons8.com/?size=100&id=ii6Lr4KivOiE&format=png" alt="cart"/></button>
+  </div>
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="Profile.html">Profile</a></li>
+      <li><a href="order.html">Orders</a></li>
+      <li><a href="signout.html">Signout</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="orders-container">
+  <h2>My Orders</h2>
+  <div id="ordersList"></div>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>Furnovera</h3>
+      <p>Your trusted partner for premium furniture and lifestyle.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Shop</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="order.html">Orders</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Email: support@furnovera.com</p>
+      <p>Phone: +91-987654310</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Furnovera. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+  function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('show');
+    if (sidebar.classList.contains('show')) {
+      document.addEventListener('click', outsideClickListener);
+    } else {
+      document.removeEventListener('click', outsideClickListener);
+    }
+  }
+
+  function outsideClickListener(event) {
+    const sidebar = document.querySelector(".sidebar");
+    const toggleBtn = document.querySelector(".side");
+    if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+      sidebar.classList.remove("show");
+      document.removeEventListener("click", outsideClickListener);
+    }
+  }
+
+  function getStatusClass(status) {
+    const s = status?.toLowerCase();
+    if (s === 'shipped') return 'status-shipped';
+    if (s === 'delivered') return 'status-delivered';
+    if (s === 'cancelled') return 'status-cancelled';
+    return 'status-pending';
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const ordersList = document.getElementById("ordersList");
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const loginButton = document.querySelector('.righthead button:nth-child(1)');
+    if (user) {
+      loginButton.style.display = "none";
+    }
+
+    if (!token || !user || !user._id) {
+      ordersList.innerHTML = `<p style="text-align:center; font-size:16px; color:#888;">Please log in to view your orders.</p>`;
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://https://furnovera-backend.onrender.comlocalhost:5000/api/orders/user/${user._id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      const orders = await response.json();
+
+      if (!Array.isArray(orders) || orders.length === 0) {
+        ordersList.innerHTML = `<p style="text-align:center; font-size:16px; color:#888;">You have no orders yet.</p>`;
+        return;
+      }
+
+      orders.reverse().forEach((order, index) => {
+        const card = document.createElement("div");
+        card.className = "order-card";
+
+        const itemList = order.items.map(item => {
+          const qty = item.qty || 1;
+          return `<li><span>${item.name} × ${qty}</span><span>₹${item.price * qty}</span></li>`;
+        }).join("");
+
+        const date = new Date(order.createdAt).toLocaleString();
+
+        card.innerHTML = `
+          <h3>Order #${orders.length - index}</h3>
+          <p>Placed on: ${date}</p>
+          <ul>${itemList}</ul>
+          <p><strong>Total: ₹${order.total}</strong></p>
+          <p>Status: <span class="status-badge ${getStatusClass(order.status)}">${order.status}</span></p>
+          <p>Payment Method: ${order.paymentMethod?.toUpperCase()}</p>
+        `;
+
+        ordersList.appendChild(card);
+      });
+
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      ordersList.innerHTML = `<p style="text-align:center; font-size:16px; color:#e00;">Failed to load orders. Please try again later.</p>`;
+    }
+  });
+</script>
+
+</body>
+</html>

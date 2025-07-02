@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Furniture Admin Panel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef3f8;
+      color: #333;
+      overflow-x: hidden;
+    }
+    .admin-header {
+      background: #0a5b9c;
+      color: white;
+      padding: 10px 20px;
+      align-items: center;
+    }
+    .container {
+      width: 90%;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    #productList {
+      margin-top: 30px;
+      display: grid;
+      gap: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      justify-content: center;
+    }
+    .product-card {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      text-align: left;
+      max-width: 300px;
+      margin: auto;
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 12px;
+    }
+    .product-card h3 {
+      font-size: 18px;
+      margin: 8px 0 5px;
+      color: #333;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: #555;
+      margin: 4px 0;
+    }
+    .product-card del {
+      color: #999;
+      font-size: 13px;
+    }
+    .product-card strong {
+      color: #28a745;
+      font-size: 15px;
+    }
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .actions button {
+      margin: 5px 4px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+    }
+    .edit-btn { background-color: #f0ad4e; }
+    .delete-btn { background-color: #d9534f; }
+    .add-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+    input, textarea {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    nav {
+      background: #0a5b9c;
+      padding: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+    nav a {
+      color: white;
+      margin-right: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .form-popup {
+      background: #fdfdfd;
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header class="admin-header">
+    <h2>Furniture Admin Panel</h2>
+    <nav>
+      <a href="fur.html">Products</a>
+      <a href="admin-toggle.html">Orders</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>All Products</h2>
+    <button class="add-btn" onclick="openAddForm()">➕ Add New Product</button>
+    <div id="formArea"></div>
+    <div id="productList"></div>
+  </div>
+
+  <script>
+    const BASE_URL = "https://furnovera-backend.onrender.com";
+    let products = [];
+
+    const productList = document.getElementById("productList");
+    const formArea = document.getElementById("formArea");
+
+    async function fetchProducts() {
+      const res = await fetch(`${BASE_URL}/api/products`);
+      products = await res.json();
+      renderProducts();
+    }
+
+    function renderProducts() {
+      productList.innerHTML = "";
+      products.forEach((product, index) => {
+        productList.innerHTML += `
+          <div class="product-card">
+            <img src="${BASE_URL}${product.imageUrl}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><del>₹${product.price}</del> <strong>₹${product.discount}</strong></p>
+            <div class="actions">
+              <button class="edit-btn" onclick="openAddForm(${index})">Edit</button>
+              <button class="delete-btn" onclick="deleteProduct('${product._id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function openAddForm(index = null) {
+      const isEdit = index !== null;
+      const product = isEdit ? products[index] : {};
+      formArea.innerHTML = `
+        <div class="form-popup">
+          <h3>${isEdit ? "Edit" : "Add"} Product</h3>
+          <input type="text" id="name" placeholder="Product Name" value="${product?.name || ""}">
+          <textarea id="description" placeholder="Description">${product?.description || ""}</textarea>
+          <input type="number" id="price" placeholder="Price" value="${product?.price || ""}">
+          <input type="number" id="discount" placeholder="Discounted Price" value="${product?.discount || ""}">
+          <input type="text" id="imageUrl" placeholder="Image (e.g. /uploads/img.jpg)" value="${product?.imageUrl || ""}">
+          <input type="text" id="category" placeholder="Category" value="${product?.category || ""}">
+          <button class="add-btn" onclick="${isEdit ? `saveEdit('${product._id}')` : "addProduct()"}">${isEdit ? "Update" : "Save"}</button>
+        </div>
+      `;
+    }
+
+    async function addProduct() {
+      const data = getFormData();
+      const res = await fetch(`${BASE_URL}/api/products`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        alert("✅ Product saved!");
+        await fetchProducts();
+        formArea.innerHTML = "";
+      } else {
+        const err = await res.json();
+        console.error(err);
+        alert("❌ Failed to save product");
+      }
+    }
+
+    async function saveEdit(id) {
+      const updatedProduct = getFormData();
+      const res = await fetch(`${BASE_URL}/api/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedProduct)
+      });
+
+      if (res.ok) {
+        alert("✅ Product updated!");
+        await fetchProducts();
+        formArea.innerHTML = "";
+      } else {
+        const err = await res.json();
+        console.error(err);
+        alert("❌ Failed to update product");
+      }
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm("Are you sure?")) return;
+      await fetch(`${BASE_URL}/api/products/${id}`, { method: 'DELETE' });
+      await fetchProducts();
+    }
+
+    function getFormData() {
+      return {
+        name: document.getElementById("name").value,
+        description: document.getElementById("description").value,
+        price: parseInt(document.getElementById("price").value),
+        discount: parseInt(document.getElementById("discount").value),
+        imageUrl: document.getElementById("imageUrl").value.startsWith("/uploads")
+          ? document.getElementById("imageUrl").value
+          : `/uploads/${document.getElementById("imageUrl").value}`,
+        category: document.getElementById("category").value
+      };
+    }
+
+    fetchProducts();
+  </script>
+</body>
+</html>

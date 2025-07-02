@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Furnovera</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header class="heads">
+        <div class="lefthead">
+            <button class="side" onclick="toggleSidebar()">
+                <img class="sideImg" src="https://img.icons8.com/?size=100&id=16247&format=png&color=000000" alt="menu" />
+            </button>
+            <div class="logo">
+                <img src="img/ChatGPT Image Jun 29, 2025, 10_23_13 PM.png" alt="logo" />
+                <h2>Furnovera</h2>
+            </div>
+        </div>
+        <div class="searchbar">
+            <input type="text" id="search" placeholder="Search" oninput="filterProducts()">
+        </div>
+        <div class="righthead">
+            <button class="log" onclick="location.href='login.html'">
+                <img class="logimg" src="https://img.icons8.com/?size=100&id=fJ7hcfUGpKG7&format=png&color=1A1A1A" alt="login">
+            </button>
+            <button class="heart" onclick="location.href='wishlist.html'">
+                <img class="heartimg" src="https://img.icons8.com/?size=100&id=87&format=png&color=000000" alt="heart">
+            </button>
+            <button class="cart" onclick="location.href='cart.html'">
+                <img class="cartimg" src="https://img.icons8.com/?size=100&id=ii6Lr4KivOiE&format=png&color=000000" alt="Cart">
+            </button>
+        </div>
+        <div class="sidebar">
+            <ul>
+                <h2>Menu</h2>
+                <li><a href="Profile.html">Profile</a></li>
+                <li><a href="order.html">Orders</a></li>
+                <li><a href="signout.html">Signout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section aria-label="Newest Photos">
+        <div class="carousel" data-carousel>
+            <button class="carousel-button prev" data-carousel-button="prev">
+                <img class="carousel-button-prev" src="https://img.icons8.com/?size=100&id=LHpwYURAFiGx&format=png&color=000000" alt="Prev">
+            </button>
+            <button class="carousel-button next" data-carousel-button="next">
+                <img class="carousel-button-next" src="https://img.icons8.com/?size=100&id=K7t3eZMUDBlH&format=png&color=000000" alt="next">
+            </button>
+            <ul data-slides>
+                <li class="slide" data-active>
+                    <img src="img/virender-singh-hE0nmTffKtM-unsplash.jpg" alt="carol1">
+                    <h3>Elevate Your Comfort</h3>
+                    <h5>Sink into luxury with our handcrafted lounge chair — perfect for cozy corners and modern interiors</h5>
+                    <button class="CTA" onclick="document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });">Explore Now</button>
+                </li>
+                <li class="slide">
+                    <img src="https://plus.unsplash.com/premium_photo-1681558314333-fb036f1df542?w=1000&auto=format&fit=crop&q=60" alt="carol2">
+                    <h3>Your favorite corner just got a makeover</h3>
+                    <h5>The Luxe Lounge Chair invites you to pause, breathe, and relax.</h5>
+                    <button class="CTA" onclick="document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });">Explore Now</button>
+                </li>
+                <li class="slide">
+                    <img src="https://plus.unsplash.com/premium_photo-1670076505419-99468d952c61?w=600&auto=format&fit=crop&q=60" alt="carol3">
+                    <h3>Sleep Like Royalty</h3>
+                    <h5>Experience unmatched comfort and durability with our luxurious solid wood king-size bed. Your dream bedroom starts here.</h5>
+                    <button class="CTA" onclick="document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });">Explore Now</button>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="explore" id="explore">
+        <div class="explore-now">
+            <h2>Explore Our Collection</h2>
+            <ul class="explore-furniture-list">
+                <li class="explore-furniture" onclick="location.href='product.html?category=all'">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBz78UfNjddtBsVVXeO05OcBIl0UlMto1sNg&s" alt="All img">
+                    <p>All Furnitures</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=seating'">
+                    <img src="img/spacejoy-vPKNB_gc23Q-unsplash.jpg" alt="seating">
+                    <p>Seating</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=bedroom'">
+                    <img src="https://plus.unsplash.com/premium_photo-1676823553444-3ce8a1bc85c8?w=600" alt="bedroom">
+                    <p>Bedroom</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=dining'">
+                    <img src="https://plus.unsplash.com/premium_photo-1676320514175-8a41932fcd46?w=600" alt="dining">
+                    <p>Dining</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=study%26office'">
+                    <img src="img/nubelson-fernandes-QHewa_VkQzk-unsplash.jpg" alt="study&office">
+                    <p>Study & Office</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=living-room'">
+                    <img src="https://plus.unsplash.com/premium_photo-1674480165860-f60bcf6aa2f7?w=600" alt="living-room">
+                    <p>Living Room</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=organizers%26storage'">
+                    <img src="https://media.istockphoto.com/id/1396586241/photo/wooden-cabinets-wooden-desk-chest-of-drawers.webp?a=1&b=1&s=612x612&w=0&k=20&c=DIecVQVsDpgpHrOtHzsK_TrSMPczztfvSArL8iNaNZA=" alt="organizers&storage">
+                    <p>Organizers & Storage</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=outdoor'">
+                    <img src="https://plus.unsplash.com/premium_photo-1673522561650-0e9b68be2ca3?w=600" alt="outdoor">
+                    <p>Outdoor</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=kids'">
+                    <img src="https://plus.unsplash.com/premium_photo-1661595251075-5fceeb15ca18?w=600" alt="kids">
+                    <p>Kids</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=entryway%26hallway'">
+                    <img src="https://images.unsplash.com/photo-1557037559-bedd47b49aaf?w=600" alt="entryway&hallway">
+                    <p>Entryway & Hallway</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=decor%26utility'">
+                    <img src="https://plus.unsplash.com/premium_photo-1683121022649-b38ed074d5e5?w=600" alt="decor&utility">
+                    <p>Decorative & Utility</p>
+                </li>
+                <li class="explore-furniture" onclick="location.href='product.html?category=kitchen'">
+                    <img src="https://plus.unsplash.com/premium_photo-1670950412066-2dc58699d7ad?w=600" alt="kitchen">
+                    <p>Kitchen</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="why-choose-us" id="why-us">
+        <h2>Why Choose Furnovera?</h2>
+        <div class="reasons">
+            <div class="reason-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/furniture.png" alt="Quality">
+                <h4>Premium Quality</h4>
+                <p>Handpicked, durable furniture crafted with care and precision.</p>
+            </div>
+            <div class="reason-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/price-tag-euro.png" alt="Affordable">
+                <h4>Affordable Prices</h4>
+                <p>Top-quality products at prices that won’t break the bank.</p>
+            </div>
+            <div class="reason-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/shipped.png" alt="Fast Delivery">
+                <h4>Fast Delivery</h4>
+                <p>Quick and reliable shipping right to your doorstep.</p>
+            </div>
+            <div class="reason-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/technical-support.png" alt="Support">
+                <h4>24/7 Support</h4>
+                <p>Friendly customer service to help you anytime, anywhere.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Furnovera</h3>
+                <p>Your trusted partner for premium furniture and lifestyle.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#explore">Explore</a></li>
+                    <li><a href="#why-us">Why Us</a></li>
+                    <li><a href="Profile.html">Profile</a></li>
+                    <li><a href="order.html">Orders</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>Email: support@furnovera.com</p>
+                <p>Phone: +91-987654310</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Furnovera. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

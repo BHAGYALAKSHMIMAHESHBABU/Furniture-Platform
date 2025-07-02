@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Furnovera</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="wishlist.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.1/lottie.min.js"></script> -->
+    <script src="script.js" defer></script>
+
+</head>
+
+<body>
+    <header class="heads">
+        <div class="lefthead">
+            <button class="side" onclick="toggleSidebar()">
+                <img class="sideImg" src="https://img.icons8.com/?size=100&id=16247&format=png&color=000000"
+                    alt="menu" />
+            </button>
+            <div class="logo">
+                <img src="img/ChatGPT Image Jun 29, 2025, 10_23_13 PM.png" alt="logo" />
+                <h2>Furnovera</h2>
+            </div>
+        </div>
+        <div class="searchbar">
+            <input type="text" id="search" placeholder="Search" oninput="filterProducts()">
+        </div>
+        <div class="righthead">
+            <button class="log"  onclick="location.href='login.html'">
+                <img class="logimg" src="https://img.icons8.com/?size=100&id=fJ7hcfUGpKG7&format=png&color=1A1A1A"
+                    alt="login">
+            </button>
+            <button class="heart" onclick="location.href='wishlist.html'">
+                <img class="heartimg" src="https://img.icons8.com/?size=100&id=87&format=png&color=000000" alt="heart">
+            </button>
+            <button class="cart" onclick="location.href='cart.html'">
+                <img class="cartimg" src="https://img.icons8.com/?size=100&id=ii6Lr4KivOiE&format=png&color=000000"
+                    alt="Cart">
+            </button>
+
+        </div>
+        <div class="sidebar">
+            <ul>
+                <h2>Menu</h2>
+                <li><a href="Profile.html">Profile</a></li>
+                <li><a href="order.html">Orders</a></li>
+                <li><a href="signout.html">Signout</a></li>
+
+            </ul>
+        </div>
+    </header>
+
+  <main class="wishlist-container">
+    <h1>Your Wishlist</h1>
+    <div class="wishlist-grid" id="wishlist-items">
+      <!-- Wishlist items will appear here -->
+    </div>
+    <p id="empty-message">Your wishlist is currently empty.</p>
+  </main>
+  
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Furnovera</h3>
+                <p>Your trusted partner for premium furniture and lifestyle.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#explore">Explore</a></li>
+                    <li><a href="#why-us">Why Us</a></li>
+                    <li><a href="Profile.html">Profile</a></li>
+                    <li><a href="order.html">Orders</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>Email: support@furnovera.com</p>
+                <p>Phone: +91-987654310</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Furnovera. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+  const baseURL = "https://furnovera-backend.onrender.com";
+  const container = document.getElementById("wishlist-items");
+  const emptyMessage = document.getElementById("empty-message");
+
+  // 🔐 Get user info
+  const user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
+  const userId = user?.id || user?._id;
+
+  // 🚫 Hide login icon if logged in
+  const loginButton = document.querySelector(".log");
+  if (userId && loginButton) {
+    loginButton.style.display = "none";
+  }
+
+  // ✅ Load wishlist if user exists
+  if (!userId) {
+    emptyMessage.textContent = "Please login to view your wishlist.";
+    emptyMessage.style.display = "block";
+  } else {
+    loadWishlist();
+  }
+
+  // ✅ Function to load wishlist
+  async function loadWishlist() {
+    try {
+      const res = await fetch(`${baseURL}/api/wishlist/${userId}`);
+      const data = await res.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        emptyMessage.style.display = "block";
+        container.innerHTML = "";
+        return;
+      }
+
+      emptyMessage.style.display = "none";
+      container.innerHTML = "";
+
+      console.log("🎁 Fetched wishlist data:", data);
+
+      data.forEach(item => {
+        const product = item.productId;
+        if (!product) return;
+
+        const card = document.createElement("div");
+        card.classList.add("wishlist-card");
+
+        card.innerHTML = `
+          <img src="${baseURL}${product.imageUrl}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p class="price">₹${product.discount || product.price}</p>
+          <button onclick="removeFromWishlist('${product._id}')">Remove</button>
+        `;
+
+        container.appendChild(card);
+      });
+    } catch (err) {
+      console.error("Error loading wishlist:", err);
+      emptyMessage.textContent = "Failed to load wishlist.";
+      emptyMessage.style.display = "block";
+    }
+  }
+
+  // ✅ Remove item from wishlist
+  async function removeFromWishlist(productId) {
+    try {
+      await fetch(`${baseURL}/api/wishlist/${userId}/remove`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ productId })
+      });
+      loadWishlist();
+    } catch (err) {
+      console.error("Error removing item:", err);
+      alert("Failed to remove item from wishlist");
+    }
+  }
+function addToCart(productId) {
+  fetch(`${baseURL}/api/products/${productId}`)
+    .then((res) => res.json())
+    .then((product) => {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Check if already in cart
+      const existing = cart.find((item) => item._id === product._id);
+      if (existing) {
+        existing.qty += 1; // Increase qty
+      } else {
+        product.qty = 1;
+        cart.push(product);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ Added to cart");
+    })
+    .catch((err) => {
+      console.error("Error adding to cart:", err);
+      alert("❌ Failed to add to cart");
+    });
+}
+
+</script>
+<script src="index.js"></script>
+</body>
+</html>
